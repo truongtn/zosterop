@@ -1,21 +1,26 @@
 import random
 
-password = 'truong'
+password = 'enocpass'
 
 
 def leetmode(a):
-    b = [{'o': '0'}, {'i': '1'}, {'s': '5'}, {'s','$'}, {'a','@'}, {'i','1'}]
+    b = [{'o': '0'}, {'i': '1'}, {'s': '5'}, {'s', '$'}, {'i', '1'}]
     for i in b:
         if a in i:
             return i[a]
+        elif a=='a':
+            return '@'
     return a
+
 
 def toCapital(a):
     return a.upper()
 
+
 def addSuffix(a):
-    b = ['','123','1@','!','#']
-    return a+b[random.randrange(0,len(b))]
+    b = ['', '123', '1@', '!', '#']
+    return a + b[random.randrange(0, len(b))]
+
 
 result = []
 result.append(password)
