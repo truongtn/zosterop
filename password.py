@@ -4,11 +4,14 @@ password = 'enocpass'
 
 
 def leetmode(a):
-    b = [{'o': '0'}, {'i': '1'}, {'s': '5'}, {'s', '$'}, {'i', '1'}]
+    b = [{'o': '0'}, {'i': ['1', '!']}, {'s': ['5', '$']}]
     for i in b:
         if a in i:
-            return i[a]
-        elif a=='a':
+            if isinstance(i[a], list) == False:
+                return i[a]
+            else:
+                return i[a][random.randint(0, len(i))]
+        elif a == 'a':
             return '@'
     return a
 
@@ -26,7 +29,7 @@ result = []
 result.append(password)
 while 1:
     new_password = password
-    for i in range(random.randrange(0, 100)):
+    for i in range(random.randint(0, 100)):
         a = random.randrange(0, len(password))
         b = random.randrange(0, 2)
         new_password = list(new_password)
