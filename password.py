@@ -1,6 +1,21 @@
-import random
+import random, sys
 
-password = 'enocpass'
+
+
+if len(sys.argv) < 2:
+    print("""
+         _______________
+    < Hello, world! >
+     ---------------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+    """)
+    sys.exit(0)
+
+password = sys.argv[1]
 
 
 def leetmode(a):
@@ -24,7 +39,7 @@ def addSuffix(a):
     b = ['', '123', '1@', '!', '#']
     return a + b[random.randrange(0, len(b))]
 
-
+f = open('result.txt','a')
 result = []
 result.append(password)
 while 1:
@@ -43,5 +58,7 @@ while 1:
             new_password = addSuffix(new_password)
     if new_password not in result:
         result.append(new_password)
+        f.write(new_password)
+        f.write('\n')
         print(new_password)
         print(len(result))
