@@ -1,2 +1,3 @@
 # zosterop
-Generating totally all the changed form of a password. Like CUPP if you have known it
+Generating a wordlist from a single password, like CUPP if you know it <br>
+Usage: zosterop.py [password] 
