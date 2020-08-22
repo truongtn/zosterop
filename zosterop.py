@@ -2,7 +2,7 @@ import random, sys
 import argparse
 from xeger import Xeger
 import pyfiglet
-
+import base64
 if len(sys.argv) < 2:
     print("""
          _______________
@@ -17,13 +17,72 @@ if len(sys.argv) < 2:
     """)
     sys.exit(0)
 
+ascii_banner = pyfiglet.figlet_format("zosterop")
+print(ascii_banner)
 parser = argparse.ArgumentParser()
 parser.add_argument('-p', '--pass', help='password', dest='root')
 parser.add_argument('-r', '--regex', help='Regex. Example: [aA]dmin[a-d1-3]{0,4}@[a-d1-6]{4,10}', dest='reg')
 parser.add_argument('-l', '--limit', help='limit or length', dest='limit')
 parser.add_argument('-m', '--mics', help='misc', dest='mics')
+parser.add_argument('-b64', '--base64', help='base64 encode', dest='b64')
 args = parser.parse_args()
 result = []
+x=Xeger()
+#######################################
+class passWord():
+    def __init__(self,l,tempList):
+        self.l=l
+        self.tempList=tempList
+        self.x=Xeger()
+
+    def genPass2(self):
+        result=[]
+        f = open('result.txt','a')
+        for i in range(0,self.l):
+            temp=""
+            for i in self.tempList:
+                if i[1]=='0': temp+=self.x.xeger(i[0])
+                elif i[1]=='1': 
+                    temp+=''.join(sorted(self.x.xeger(i[0])))
+                elif i[1]=='2': 
+                    temp+=''.join(sorted(self.x.xeger(i[0]),reverse=True))
+                elif i[1]=='3':
+                    if bool(random.getrandbits(1)):
+                        temp+=''.join(sorted(self.x.xeger(i[0]),reverse=True))
+                    else:
+                        temp+=''.join(sorted(self.x.xeger(i[0])))
+            if temp not in result: 
+                result.append(temp)
+                f.write(temp)
+                f.write('\n')
+                print(temp)
+        return result
+
+    def genPass2WithBase64(self):
+        result=[]
+        f = open('result.txt','a')
+        for i in range(0,self.l):
+            temp=""
+            for i in self.tempList:
+                #print(i[0])
+                if i[1]=='0': temp+=self.x.xeger(i[0])
+                elif i[1]=='1': 
+                    temp+=''.join(sorted(self.x.xeger(i[0])))
+                elif i[1]=='2': 
+                    temp+=''.join(sorted(self.x.xeger(i[0]),reverse=True))
+                elif i[1]=='3':
+                    if bool(random.getrandbits(1)):
+                        temp+=''.join(sorted(self.x.xeger(i[0]),reverse=True))
+                    else:
+                        temp+=''.join(sorted(self.x.xeger(i[0])))
+            if temp not in result: 
+                result.append(temp)
+                f.write(base64.b64encode(temp.encode('utf-8')).decode('utf-8'))
+                f.write('\n')
+                print(base64.b64encode(temp.encode('utf-8')).decode('utf-8'))
+        return result
+
+##########################################################################################
 if args.root:
     print("")
     password = sys.argv[1]
@@ -77,11 +136,9 @@ if args.root:
         print('[INFO]: The file result is saved in result.txt')
         sys.exit(0)
 if args.reg:
-    ascii_banner = pyfiglet.figlet_format("zosterop")
-    print(ascii_banner)
     f = open('result.txt','a')
     x=Xeger()
-    l= (args.limit if args.limit else 1000)
+    l= int(args.limit if args.limit else 1000)
     for i in range(0,l):
         a=x.xeger(args.reg)
         if a not in result:
@@ -91,30 +148,14 @@ if args.reg:
             print(a)
     print('[INFO]: The file result is saved in result.txt')
 if args.mics:
-    f = open('result.txt','a')
     tempList=[]
-    l= int(args.limit if args.limit else 1000)
-    x=Xeger()
+    l= int((args.limit if args.limit else 1000))
     for i in range(0,int(args.mics)):
         a=input("Nhap vao regex  >>")
         b=input("Sort (0,1,2,3)? >>")
         tempList.append([a,b])
-    for i in range(0,l):
-        temp=""
-        for i in tempList:
-            #print(i[0])
-            if i[1]=='0': temp+=x.xeger(i[0])
-            elif i[1]=='1': 
-                temp+=''.join(sorted(x.xeger(i[0])))
-            elif i[1]=='2': 
-                temp+=''.join(sorted(x.xeger(i[0]),reverse=True))
-            elif i[1]=='3':
-                if bool(random.getrandbits(1)):
-                    temp+=''.join(sorted(x.xeger(i[0]),reverse=True))
-                else:
-                    temp+=''.join(sorted(x.xeger(i[0])))
-        if temp not in result: 
-            result.append(temp)
-            f.write(temp)
-            f.write('\n')
-            print(temp)
+    pw=passWord(l,tempList)
+    if args.b64:
+        pw.genPass2WithBase64()
+    else:
+        pw.genPass2()
