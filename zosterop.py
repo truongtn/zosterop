@@ -17,8 +17,6 @@ if len(sys.argv) < 2:
     """)
     sys.exit(0)
 
-ascii_banner = pyfiglet.figlet_format("zosterop")
-print(ascii_banner)
 parser = argparse.ArgumentParser()
 parser.add_argument('-p', '--pass', help='password', dest='root')
 parser.add_argument('-r', '--regex', help='Regex. Example: [aA]dmin[a-d1-3]{0,4}@[a-d1-6]{4,10}', dest='reg')
@@ -146,7 +144,6 @@ if args.reg:
             f.write(a)
             f.write('\n')
             print(a)
-    print('[INFO]: The file result is saved in result.txt')
 if args.mics:
     tempList=[]
     l= int((args.limit if args.limit else 1000))
