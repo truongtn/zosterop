@@ -93,13 +93,9 @@ if args.reg:
 if args.mics:
     f = open('result.txt','a')
     tempList=[]
-    l= (args.limit if args.limit else 1000)
+    l= int(args.limit if args.limit else 1000)
     x=Xeger()
-    print("aa")
-    c=int(args.mics)
-    print(type(c))
-    print(c)
-    for i in range(0,c):
+    for i in range(0,int(args.mics)):
         a=input("Nhap vao regex  >>")
         b=input("Sort (0,1,2,3)? >>")
         tempList.append([a,b])
