@@ -38,7 +38,7 @@ def toCapital(a):
 
 
 def addSuffix(a):
-    b = ['', '123', '1@', '!', '#', '@123']
+    b = ['', '123', '1@', '!', '#', '@123','@123456','123456@','123@']
     return a + b[random.randrange(0, len(b))]
 
 
